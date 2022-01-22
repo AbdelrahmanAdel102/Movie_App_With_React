@@ -9,36 +9,34 @@ import LogIN from './pages/login';
 import SignUp from './pages/signup';
 import { connect } from "react-redux";
 import Favorites from './pages/favorits';
+import { langContext } from "./pages/LanguageContext";
+import { useState } from 'react';
 
 function App() {
+  const [contextLang, setContextLang] = useState("en");
   return (
     <div className='app.css'>
       <div className="container-fulied">
-
-        {/* // <div className={this.props.theme === "dark" ? "text-right" : "text-left"}
-      //   dir={this.props.theme === "dark" ? "rtl" : "ltr"}>
-      //   <h1 className="text-info"> {this.props.theme} </h1> */}
-
-        <Router>
-          <Navbar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/:id" element={<MovieDetailes />} />
-            <Route path="/results/:input" element={<Results />} />
-            <Route path="/favorits/" element={<Favorites />} />
-            <Route path="/login" element={<LogIN />} />
-            <Route path="/register" element={<SignUp />} />
-          </Routes>
-        </Router>
-      </div>
-    </div>
+        <langContext.Provider value={{ contextLang, setContextLang }}>
+          <Router>
+          <div className={contextLang === "ar" ? "text-end" : "text-start"} dir={contextLang === "ar" ? "rtl" : "ltr"}>
+            <Navbar />
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/:id" element={<MovieDetailes />} />
+                <Route path="/results/:input" element={<Results />} />
+                <Route path="/favorits" element={<Favorites />} />
+                <Route path="/login" element={<LogIN />} />
+                <Route path="/register" element={<SignUp />} />
+              </Routes>
+            </div>
+          </Router>
+        </langContext.Provider>
+      </div >
+    </div >
 
   );
 }
-const mapStateToProps = (state) => {
-  return {
 
-    theme: state.theme
-  }
-}
+
 export default (App);

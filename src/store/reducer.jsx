@@ -1,4 +1,3 @@
-import { AiFillHeart, AiOutlineHeart } from "react-icons/ai"
 
 const INITIAL_STATE = {
 	fav: [],

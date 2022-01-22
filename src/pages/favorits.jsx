@@ -3,13 +3,20 @@
 import { useSelector } from 'react-redux';
 import { remove } from "../store/action";
 import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { langContext } from "./LanguageContext";
+import { useContext } from 'react';
+
 
 function Favorites() {
     const dispatch = useDispatch()
+
     const removeMovie = (el) => {
         dispatch(remove(el))
-
     }
+
+    const { contextLang } = useContext(langContext);
+
     const ind = useSelector((state) =>
         state.fav)
 
@@ -18,7 +25,8 @@ function Favorites() {
             <div className="container">
                 {ind.length === 0 ? (
                     <div className="text-center">
-                        <h1>No Fav yet</h1>
+                        {/* <h1>No Fav yet</h1> */}
+                        <h1>{contextLang === "en" ? "No Favorits Yet" : "لا يوجد افلام مفضلة حتي الان"}</h1>
                     </div>
 
                 ) : <div>
@@ -26,9 +34,9 @@ function Favorites() {
                         return (
                             <div className="card mb-3 mt-4" key={el.id}>
                                 <div className='row g-0'>
-                                    <div className='col-md-3'>
+                                    <Link to={`/${el.id}`} className='col-md-3'>
                                         <img src={`https://image.tmdb.org/t/p/w500${el.poster_path}`} className="img-fluid rounded-start" alt="Cover" style={{ maxHeight: "30rem" }} />
-                                    </div>
+                                    </Link>
                                     <div className='col-md-9 d-flex align-items-center'>
                                         <div className="card-body">
                                             <h3 className="card-title">{el.original_title}</h3>
@@ -37,7 +45,7 @@ function Favorites() {
                                             <p className="card-text"><strong>Relese Date: </strong>{el.release_date}</p>
                                         </div>
                                         <div className='d-flex align-items-end flex-column bd-highlight mb-3'>
-                                            <span className='btn btn-danger ms-2' onClick={() => removeMovie(el)}>Remove </span>
+                                            <span className='btn btn-danger ms-2' onClick={() => removeMovie(el)}>Remove</span>
                                         </div>
                                     </div>
                                 </div>
